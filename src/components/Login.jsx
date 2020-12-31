@@ -22,6 +22,17 @@ class Login extends React.Component {
     })
   }
 
+  componentDidMount () {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        localStorage.setItem("latitude", position.coords.latitude)
+        localStorage.setItem("longitude", position.coords.longitude)
+      })
+    } else {
+      console.log("Geolocation is not supported by this browser.")
+    }
+  }
+
   LOGIN = (e) => {
     e.preventDefault();
     axios({
