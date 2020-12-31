@@ -3,17 +3,29 @@ import Footer from './components/Footer'
 import Login from './components/Login'
 import Register from './components/Register'
 import Content from './components/Content'
-import { Fragment } from 'react'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 
 function App() {
   return (
-    <Fragment>
+    <Router>
       <Header />
-      <Login />
-      <Register />
-      <Content />
+      <Switch>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <Route path="/register">
+          <Register />
+        </Route>
+        <Route path="/">
+          <Content />
+        </Route>
+      </Switch>
       <Footer />
-    </Fragment>
+    </Router>
   );
 }
 
