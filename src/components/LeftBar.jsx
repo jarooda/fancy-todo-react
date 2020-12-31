@@ -1,11 +1,17 @@
 import React from 'react'
 import {
   Redirect
-} from "react-router-dom";
+} from "react-router-dom"
+import API from '../api/index'
 
 class LeftBar extends React.Component {
   state = {
-    isLogin: true
+    isLogin: true,
+    weather: {
+      location: 'Jakarta',
+      weather: 'Sunny',
+      temp: '33'
+    }
   }
 
   LOGOUT = () => {
@@ -16,6 +22,32 @@ class LeftBar extends React.Component {
     })
   }
 
+  GETLOCATION = () => {
+    const longitude = localStorage.getItem("longitude")
+    const latitude = localStorage.getItem("latitude")
+    const access_token = localStorage.getItem("access_token")
+    API.GETWEATHER({
+      access_token,
+      latitude,
+      longitude
+    }).then(res => {
+      const location = res.name
+      const weather = res.weather[0].main
+      const temp = (parseFloat(res.main.temp) - parseFloat(273.15)).toFixed(2)
+      this.setState({
+        weather: {
+          location,
+          weather,
+          temp
+        }
+      })
+    })
+  }
+
+  componentDidMount() {
+    this.GETLOCATION()
+  }
+
   render() {
     if (!localStorage.getItem("access_token") && !localStorage.getItem("name")) {
       return <Redirect to={{ pathname: "/login" }} />
@@ -23,7 +55,7 @@ class LeftBar extends React.Component {
     return (
       <aside className="px-3 py-1 sm:w-4/12 w-full">
         <div className="sticky top-4 border-t border-b">
-    <p className="py-3">Hey <span className="font-semibold">{localStorage.getItem("name")}</span>, it looks like Jakarta's weather is on Haze with temperature 27.30°C.<br/>Want to Add a New Todo? Or <button onClick={this.LOGOUT} className="link">Logout</button>?</p>
+    <p className="py-3">Hey <span className="font-semibold">{localStorage.getItem("name")}</span>, it looks like {this.state.weather.location}'s weather is on {this.state.weather.weather} with temperature {this.state.weather.temp}°C.<br/>Want to Add a New Todo? Or <button onClick={this.LOGOUT} className="link">Logout</button>?</p>
           <form className="flex-wrap flex justify-center border-t p-3 w-full">
             <input type="text" name="title" id="title" placeholder="Add New Title"
             className="input sm:w-full w-6/12 sm:h-auto h-12"/>
