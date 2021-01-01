@@ -8,10 +8,13 @@ class Content extends React.Component {
   state = {
     todos: [],
     form: {
+      id: 0,
       title: '',
       description: '',
-      due_date: moment().format('YYYY-MM-DD')
-    }
+      due_date: moment().format('YYYY-MM-DD'),
+      status: false
+    },
+    isupdate: false
   }
 
   fetchdata = (access_token) => {
@@ -25,17 +28,30 @@ class Content extends React.Component {
   CLEAR = () => {
     document.querySelector("#title").value = ''
     document.querySelector("#description").value = ''
+    if (this.state.form.status) {
+      document.querySelector("#status").value = 'false'
+    }
     document.querySelector("#due_date").value = moment().format('YYYY-MM-DD')
+    this.setState({
+      form: {
+        id: 0,
+        title: '',
+        description: '',
+        due_date: moment().format('YYYY-MM-DD'),
+        status: false
+      },
+      isupdate: false
+    })
   }
 
   formChange = (e) => {
-    console.log(this.state.form);
+    console.log(this.state);
     const newForm = {...this.state.form}
     newForm[e.target.name] = e.target.value
     this.setState({
       form: newForm
     }, () => {
-      console.log(this.state.form);
+      console.log(this.state);
     })
   }
 
@@ -44,22 +60,67 @@ class Content extends React.Component {
     const title = this.state.form.title
     const description = this.state.form.description
     const due_date = this.state.form.due_date
-    API.ADDDATA({
+    const status = this.state.form.status
+    const id = this.state.form.id
+    if (!this.state.isupdate) {
+      API.ADDDATA({
+        access_token,
+        title,
+        description,
+        due_date
+      }).then((res) => {
+        this.CLEAR()
+        this.fetchdata(access_token)
+      })
+    } else {
+      API.PUTDATA({
+        id,
+        status,
+        access_token,
+        title,
+        description,
+        due_date
+      }).then((res) => {
+        this.CLEAR()
+        this.fetchdata(access_token)
+      })
+    }
+  }
+
+  editTodo = (id) => {
+    const access_token = localStorage.getItem("access_token")
+    API.FETCHBYID({
       access_token,
-      title,
-      description,
-      due_date
+      id
     }).then((res) => {
-      document.querySelector("#title").value = ''
-      document.querySelector("#description").value = ''
-      document.querySelector("#due_date").value = moment().format('YYYY-MM-DD')
       this.setState({
         form: {
-          title: '',
-          description: '',
-          due_date: moment().format('YYYY-MM-DD')
-        }
+          id: res.id,
+          title: res.title,
+          description: res.description,
+          due_date: moment(res.due_date).format('YYYY-MM-DD'),
+          status: res.status
+        },
+        isupdate: true
+      }, () => {
+        document.querySelector("#title").value = res.title
+        document.querySelector("#description").value = res.description
+        document.querySelector("#status").value = res.status ? "true" : "false"
+        document.querySelector("#due_date").value = moment(res.due_date).format('YYYY-MM-DD')
       })
+    })
+  }
+
+  patchTodo = (props) => {
+    const access_token = localStorage.getItem("access_token")
+    const newStatus = props.status ? false : true
+    const id = props.id
+    API.PATCHDATA({
+      access_token,
+      id,
+      status: newStatus
+    }).then((res) => {
+      this.CLEAR()
       this.fetchdata(access_token)
     })
   }
@@ -92,8 +153,8 @@ class Content extends React.Component {
   render() {
     return (
       <div className="flex sm:flex-nowrap flex-wrap container mx-auto m-3 sm:p-0 p-3 sm:pt-5 sm:min-h-55 min-h-65 pb-3">
-        <LeftBar clear={this.CLEAR} formChange={this.formChange} addTodo={this.addTodo} due_date={this.state.form.due_date}/>
-        <Todos todos={this.state.todos} removetodo={this.removetodo}/>
+        <LeftBar clear={this.CLEAR} formChange={this.formChange} addTodo={this.addTodo} form={this.state.form} isupdate={this.state.isupdate}/>
+        <Todos todos={this.state.todos} removetodo={this.removetodo} editTodo={this.editTodo} patchTodo={this.patchTodo}/>
       </div>
     )
   }
