@@ -1,15 +1,22 @@
 import Card from './CardTodos'
+import React from 'react'
 
-const Todos = (props) => {
+class Todos extends React.Component {
+  constructor(props) {
+    super()
+  }
+
+  render() {
     return (
       <div className="sm:w-8/12 justify-center w-full flex flex-wrap border-2 rounded-xl p-3 shadow-lg">
         {
-          props.todos.map(e => {
-            return <Card todo={e} key={e.id} removetodo={props.removetodo} />
+          this.props.todos.map(e => {
+            return <Card todo={e} key={e.id} removetodo={this.props.removetodo} />
           })
         }
       </div>
     )
+  }
 }
 
 export default Todos

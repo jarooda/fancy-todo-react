@@ -46,8 +46,7 @@ class Register extends React.Component {
   render() {
     if (localStorage.getItem("access_token") && localStorage.getItem("name")) {
       return <Redirect to={{ pathname: "/" }} />
-    }
-    if (this.state.isRegister) {
+    } else if (this.state.isRegister) {
       return <Redirect to={{ pathname: "/login" }} />
     }
     return (
@@ -61,7 +60,7 @@ class Register extends React.Component {
             className="mt-3 input" onChange={this.formchange}/>
             <button className="mt-3 btn-blue">Register</button>
           </form>
-          <p className="w-full text-center pt-2">Already have an account? <Link to="/login" className="link">Register First</Link></p>
+          <p className="w-full text-center pt-2">Already have an account? <Link to="/login" className="link">Login First</Link></p>
           <p className="w-full text-center pt-2">Or Login with Google</p>
           <i className="fab fa-google mt-2 py-3 btn-blue"></i>
         </div>

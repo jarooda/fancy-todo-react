@@ -10,8 +10,7 @@ class Login extends React.Component {
     login: {
       email: '',
       password: ''
-    },
-    islogin: false
+    }
   }
 
   formchange = (e) => {
@@ -48,8 +47,7 @@ class Login extends React.Component {
         login: {
           email: '',
           password: ''
-        },
-        islogin: true
+        }
       })
     }).catch(err => {
       console.log(err)
@@ -58,9 +56,6 @@ class Login extends React.Component {
 
   render() {
     if (localStorage.getItem("access_token") && localStorage.getItem("name")) {
-      return <Redirect to={{ pathname: "/" }} />
-    }
-    if (this.state.islogin) {
       return <Redirect to={{ pathname: "/" }} />
     }
     return (
