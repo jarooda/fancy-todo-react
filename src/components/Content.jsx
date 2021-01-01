@@ -3,6 +3,7 @@ import Todos from './Todos'
 import LeftBar from './LeftBar'
 import API from '../api/index'
 import moment from 'moment'
+import { toast } from 'react-toastify';
 
 class Content extends React.Component {
   state = {
@@ -45,17 +46,14 @@ class Content extends React.Component {
   }
 
   formChange = (e) => {
-    console.log(this.state);
     const newForm = {...this.state.form}
     newForm[e.target.name] = e.target.value
     this.setState({
       form: newForm
-    }, () => {
-      console.log(this.state);
     })
   }
 
-  addTodo = (e) => {
+  submitTodo = (e) => {
     const access_token = localStorage.getItem("access_token")
     const title = this.state.form.title
     const description = this.state.form.description
@@ -71,6 +69,10 @@ class Content extends React.Component {
       }).then((res) => {
         this.CLEAR()
         this.fetchdata(access_token)
+      }).catch(err => {
+        toast.error(
+          <p className="font-semibold text-white text-center"><i className="fas fa-exclamation-triangle mr-2"></i>{err.response.data.errors.join(', ')}</p>
+        )
       })
     } else {
       API.PUTDATA({
@@ -83,6 +85,10 @@ class Content extends React.Component {
       }).then((res) => {
         this.CLEAR()
         this.fetchdata(access_token)
+      }).catch(err => {
+        toast.error(
+          <p className="font-semibold text-white text-center"><i className="fas fa-exclamation-triangle mr-2"></i>{err.response.data.errors.join(', ')}</p>
+        )
       })
     }
   }
@@ -122,6 +128,10 @@ class Content extends React.Component {
     }).then((res) => {
       this.CLEAR()
       this.fetchdata(access_token)
+    }).catch(err => {
+      toast.error(
+        <p className="font-semibold text-white text-center"><i className="fas fa-exclamation-triangle mr-2"></i>{err.response.data.errors}</p>
+      )
     })
   }
 
@@ -132,6 +142,10 @@ class Content extends React.Component {
       access_token
     }).then(res => {
       this.fetchdata(access_token)
+    }).catch(err => {
+      toast.error(
+        <p className="font-semibold text-white text-center"><i className="fas fa-exclamation-triangle mr-2"></i>{err.response.data.errors}</p>
+      )
     })
   }
 
@@ -153,7 +167,7 @@ class Content extends React.Component {
   render() {
     return (
       <div className="flex sm:flex-nowrap flex-wrap container mx-auto m-3 sm:p-0 p-3 sm:pt-5 sm:min-h-55 min-h-65 pb-3">
-        <LeftBar clear={this.CLEAR} formChange={this.formChange} addTodo={this.addTodo} form={this.state.form} isupdate={this.state.isupdate}/>
+        <LeftBar clear={this.CLEAR} formChange={this.formChange} submitTodo={this.submitTodo} form={this.state.form} isupdate={this.state.isupdate}/>
         <Todos todos={this.state.todos} removetodo={this.removetodo} editTodo={this.editTodo} patchTodo={this.patchTodo}/>
       </div>
     )

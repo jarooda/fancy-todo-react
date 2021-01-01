@@ -6,8 +6,14 @@ import Content from './components/Content'
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Redirect
 } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
+// minified version is also included
+// import 'react-toastify/dist/ReactToastify.min.css';
 
 function App() {
   return (
@@ -23,7 +29,21 @@ function App() {
         <Route path="/">
           <Content />
         </Route>
+        <Route path="*">
+          <Redirect to="/" />
+        </Route>
       </Switch>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover={false}
+      />
       <Footer />
     </Router>
   );

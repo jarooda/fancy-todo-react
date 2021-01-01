@@ -5,6 +5,7 @@ import {
   Redirect
 } from "react-router-dom";
 import { GoogleLogin } from 'react-google-login';
+import { toast } from 'react-toastify';
 
 class Login extends React.Component {
   state = {
@@ -51,7 +52,9 @@ class Login extends React.Component {
         }
       })
     }).catch(err => {
-      console.log(err)
+      toast.error(
+        <p className="font-semibold text-white text-center"><i className="fas fa-exclamation-triangle mr-2"></i>{err.response.data.errors}</p>
+      );
     })
   }
 
@@ -75,7 +78,9 @@ class Login extends React.Component {
         }
       })
     }).catch(err => {
-      console.log(err)
+      toast.error(
+        <p className="font-semibold text-white text-center"><i className="fas fa-exclamation-triangle mr-2"></i>{err.response.data.errors}</p>
+      );
     })
   }
 

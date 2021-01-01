@@ -21,11 +21,22 @@ const Card = (props) => {
             ""
           }
         </h3>
-        <p className="w-full text-left break-words border rounded-lg p-2 font-serif">{props.todo.description}</p>
-        <p className="w-full text-right break-words text-xs pr-1 mt-2">Due Date:<br/><span className="font-bold">{props.todo.status ? "Already Done" : moment(props.todo.due_date).format('MMMM Do YYYY')}</span></p>
+        <p className="w-full text-center break-words border rounded-lg px-2 shadow-sm font-serif">{props.todo.description}</p>
+        <p className={`w-full text-right break-words text-xs pr-1 mt-2
+        ${moment(props.todo.due_date).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') && !props.todo.status ? "text-red-700" : ""}
+        `}>
+          Due Date:<br/>
+          <span className="font-bold">
+            {props.todo.status ? "Already Done" : moment(props.todo.due_date).format('MMMM Do YYYY')}
+          </span>
+        </p>
         <div className="w-9/12 flex justify-between my-2">
-          <button onClick={() => props.editTodo(props.todo.id)}><i className="fas fa-edit text-2xl icon"></i></button>
-          <button onClick={() => props.removetodo(props.todo.id)}><i className="fas fa-trash-alt text-2xl icon"></i></button>
+          <button onClick={() => props.editTodo(props.todo.id)}>
+            <i className="fas fa-edit text-2xl icon"></i>
+          </button>
+          <button onClick={() => props.removetodo(props.todo.id)}>
+            <i className="fas fa-trash-alt text-2xl icon"></i>
+          </button>
         </div>
       </div>
     )

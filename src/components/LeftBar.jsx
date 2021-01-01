@@ -83,7 +83,7 @@ class LeftBar extends React.Component {
             </select>
             : ''} 
     <button onClick={() => this.props.clear()} className="sm:ml-0 ml-3 mt-3 btn-yellow">{this.props.isupdate ? "Cancel" : "Clear"}</button>
-            <button onClick={() => this.props.addTodo()} className="ml-3 mt-3 btn-blue">{this.props.isupdate ? "Save" : "Submit"}</button>
+            <button onClick={() => this.props.submitTodo()} className="ml-3 mt-3 btn-blue">{this.props.isupdate ? "Save" : "Submit"}</button>
           </div>
         </div>
       </aside>
