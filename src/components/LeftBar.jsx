@@ -3,6 +3,7 @@ import {
   Redirect
 } from "react-router-dom"
 import API from '../api/index'
+import { GoogleLogout } from 'react-google-login';
 
 class LeftBar extends React.Component {
   constructor(props) {
@@ -58,7 +59,15 @@ class LeftBar extends React.Component {
     return (
       <aside className="px-3 py-1 sm:w-4/12 w-full">
         <div className="sticky top-4 border-t border-b">
-    <p className="py-3">Hey <span className="font-semibold">{localStorage.getItem("name")}</span>, it looks like {this.state.weather.location}'s weather is on {this.state.weather.weather} with temperature {this.state.weather.temp}°C.<br/>Want to Add a New Todo? Or <button onClick={this.LOGOUT} className="link">Logout</button>? Remember you can double click todo to update its status.</p>
+          <div className="text-center mt-3">
+          <GoogleLogout
+            clientId="287616302176-70fek13isk1o70pqt5c5mkolcf5ft19f.apps.googleusercontent.com"
+            buttonText="Logout"
+            render={renderProps => (<button onClick={renderProps.onClick} disabled={renderProps.disabled} className="btn-red ml-1">Logout</button>)}
+            onLogoutSuccess={this.LOGOUT}
+          />
+          </div>
+    <p className="py-3">Hey <span className="font-semibold">{localStorage.getItem("name")}</span>, it looks like {this.state.weather.location}'s weather is on {this.state.weather.weather} with temperature {this.state.weather.temp}°C.<br/>Want to Add a New Todo? Remember you can double click todo to update its status.</p>
           <div className="flex-wrap flex justify-center border-t p-3 w-full">
             <h1 className="text-center font-semibold">{this.props.isupdate ? "Edit Todo" : "Add New Todo"}</h1>
             <input onChange={this.props.formChange} type="text" name="title" id="title" placeholder="Add New Title"

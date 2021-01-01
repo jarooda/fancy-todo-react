@@ -5,7 +5,7 @@ const Card = (props) => {
   return (
       <div
       onDoubleClick={() => props.patchTodo({id:props.todo.id, status:props.todo.status})}
-      className={`sm:w-5/12 md:w-3/12 w-full mx-2 min-h-60 overflow-y-auto text-center px-4 flex flex-wrap justify-center mt-4 rounded-lg hover:-translate-y-2 hover:border-blue-300 border-2 transform shadow bg-wave bg-top bg-no-repeat ${props.todo.status ? "bg-gray-200" : ""}`}
+      className={`sm:w-5/12 lg:w-3/12 w-full mx-2 min-h-60 overflow-y-auto text-center px-4 flex flex-wrap justify-center mt-4 rounded-lg hover:-translate-y-2 hover:border-blue-300 border-2 transform shadow bg-wave bg-top bg-no-repeat ${props.todo.status ? "bg-gray-200" : ""}`}
       >
         <h3 className="w-full text-center text-xl font-semibold pt-4 break-words">
           {props.todo.title}

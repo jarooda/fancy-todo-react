@@ -4,6 +4,7 @@ import {
   Link,
   Redirect
 } from "react-router-dom";
+import { GoogleLogin } from 'react-google-login';
 
 class Login extends React.Component {
   state = {
@@ -54,6 +55,30 @@ class Login extends React.Component {
     })
   }
 
+  responseGoogle = (response) => {
+    const google_token = response.tokenId
+    axios({
+      method: 'post',
+      url: '/googleLogin',
+      data: {
+        google_token
+      }
+    }).then(({ data }) => {
+      localStorage.setItem('access_token', data.access_token)
+      localStorage.setItem('name', data.name)
+      document.querySelector('#login-email').value = ''
+      document.querySelector('#login-password').value = ''
+      this.setState({
+        login: {
+          email: '',
+          password: ''
+        }
+      })
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+
   render() {
     if (localStorage.getItem("access_token") && localStorage.getItem("name")) {
       return <Redirect to={{ pathname: "/" }} />
@@ -71,7 +96,13 @@ class Login extends React.Component {
           </form>
           <p className="w-full text-center pt-2">Don't have an account? <Link to="/register" className="link">Register First</Link></p>
           <p className="w-full text-center pt-2">Or Login with Google</p>
-          <i className="fab fa-google mt-2 py-3 btn-blue"></i>
+          <GoogleLogin
+            clientId="287616302176-70fek13isk1o70pqt5c5mkolcf5ft19f.apps.googleusercontent.com"
+            onSuccess={this.responseGoogle}
+            onFailure={this.responseGoogle}
+            cookiePolicy={'single_host_origin'}
+            render={renderProps => (<i onClick={renderProps.onClick} disabled={renderProps.disabled} className="fab fa-google mt-2 py-3 btn-blue"></i>)}
+          />
         </div>
       </div>
     )

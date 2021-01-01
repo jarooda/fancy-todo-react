@@ -16,6 +16,7 @@ const FETCHDATA = (access_token) => {
   })
   return promise
 }
+
 const FETCHBYID = (payload) => {
   const promise = new Promise((res, rej) => {
     axios({
