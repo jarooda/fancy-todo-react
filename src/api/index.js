@@ -16,6 +16,22 @@ const FETCHDATA = (access_token) => {
   })
   return promise
 }
+const FETCHBYID = (payload) => {
+  const promise = new Promise((res, rej) => {
+    axios({
+      method: 'get',
+      url: '/todos/' + payload.id,
+      headers: {
+        access_token: payload.access_token
+      }
+    }).then(({data}) => {
+      res(data)
+    }).catch(err => {
+      rej(err)
+    })
+  })
+  return promise
+}
 
 const DELETEDATA = (payload) => {
   const promise = new Promise((res, rej) => {
@@ -123,6 +139,7 @@ const GETWEATHER = (payload) => {
 
 const API = {
   FETCHDATA,
+  FETCHBYID,
   DELETEDATA,
   ADDDATA,
   PUTDATA,

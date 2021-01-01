@@ -58,17 +58,23 @@ class LeftBar extends React.Component {
     return (
       <aside className="px-3 py-1 sm:w-4/12 w-full">
         <div className="sticky top-4 border-t border-b">
-    <p className="py-3">Hey <span className="font-semibold">{localStorage.getItem("name")}</span>, it looks like {this.state.weather.location}'s weather is on {this.state.weather.weather} with temperature {this.state.weather.temp}°C.<br/>Want to Add a New Todo? Or <button onClick={this.LOGOUT} className="link">Logout</button>?</p>
+    <p className="py-3">Hey <span className="font-semibold">{localStorage.getItem("name")}</span>, it looks like {this.state.weather.location}'s weather is on {this.state.weather.weather} with temperature {this.state.weather.temp}°C.<br/>Want to Add a New Todo? Or <button onClick={this.LOGOUT} className="link">Logout</button>? Remember you can double click todo to update its status.</p>
           <div className="flex-wrap flex justify-center border-t p-3 w-full">
-            <h1 className="text-center font-semibold">Add New Todo</h1>
+            <h1 className="text-center font-semibold">{this.props.isupdate ? "Edit Todo" : "Add New Todo"}</h1>
             <input onChange={this.props.formChange} type="text" name="title" id="title" placeholder="Add New Title"
             className="input sm:mt-3 mt-0 w-full sm:h-auto h-12"/>
             <textarea onChange={this.props.formChange} name="description" id="description" placeholder="Add New Description"
             className="input sm:mt-3 mt-0 w-full break-words sm:min-h-16 h-12"></textarea>
-            <input onChange={this.props.formChange} type="date" name="due_date" id="due_date" placeholder="Add New Date" value={this.props.due_date}
+            <input onChange={this.props.formChange} type="date" name="due_date" id="due_date" placeholder="Add New Date" value={this.props.form.due_date}
             className="input sm:mt-3 mt-0 w-full sm:h-auto h-12"/>
-            <button onClick={() => this.props.clear()} className="sm:ml-0 ml-3 mt-3 btn-yellow">Clear</button>
-            <button onClick={() => this.props.addTodo()} className="ml-3 mt-3 btn-blue">Submit</button>
+            {this.props.isupdate ?
+            <select className="input sm:mt-3 mt-0 w-full sm:h-auto h-12 bg-white" name="status" id="status" onChange={this.props.formChange}>
+              <option value="false">Not Done</option>
+              <option value="true">Done</option>
+            </select>
+            : ''} 
+    <button onClick={() => this.props.clear()} className="sm:ml-0 ml-3 mt-3 btn-yellow">{this.props.isupdate ? "Cancel" : "Clear"}</button>
+            <button onClick={() => this.props.addTodo()} className="ml-3 mt-3 btn-blue">{this.props.isupdate ? "Save" : "Submit"}</button>
           </div>
         </div>
       </aside>
