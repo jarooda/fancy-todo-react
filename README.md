@@ -1,4 +1,6 @@
 # fancy-todo-react
+[Link Demo](https://jarooda-todo-react.herokuapp.com/) <br/>
+React version of my [Jquery Fancy Todo List](https://github.com/jarooda/fancy-todo).
 
 # Getting Started with Create React App
 
