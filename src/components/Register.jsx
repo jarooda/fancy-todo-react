@@ -24,6 +24,14 @@ class Register extends React.Component {
     })
   }
 
+  componentDidMount() {
+    if (localStorage.getItem("theme") === 'dark') {
+      document.querySelector('html').classList.add('dark')
+    } else {
+      document.querySelector('html').classList.remove('dark')
+    }
+  }
+
   REGISTER = (e) => {
     e.preventDefault()
     axios({
@@ -86,7 +94,7 @@ class Register extends React.Component {
       return <Redirect to={{ pathname: "/login" }} />
     }
     return (
-      <div className="sm:min-h-55 min-h-65 flex justify-center items-center p-5">
+      <div className="sm:min-h-55 min-h-65 flex justify-center items-center p-5 dark:text-white">
         <div className="sm:w-5/12 w-full mx-4 flex justify-center flex-wrap border shadow-lg p-4 rounded-xl">
           <h1 className="w-full text-center text-3xl font-bold pb-3">Register</h1>
           <form onSubmit={this.REGISTER} className="flex-wrap flex justify-center border-b border-t p-3 w-9/12 sm:w-6/12">

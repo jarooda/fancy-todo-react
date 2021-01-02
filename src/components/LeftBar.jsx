@@ -15,7 +15,8 @@ class LeftBar extends React.Component {
         location: '',
         weather: '',
         temp: ''
-      }
+      },
+      dark: true
     }
   }
 
@@ -52,8 +53,29 @@ class LeftBar extends React.Component {
     })
   }
 
+  changeTheme = () => {
+    if (localStorage.getItem("theme") === 'dark') {
+      localStorage.setItem("theme", "day")
+      document.querySelector('html').classList.remove('dark')
+      this.setState({
+        dark: false
+      })
+    } else {
+      localStorage.setItem("theme", "dark")
+      document.querySelector('html').classList.add('dark')
+      this.setState({
+        dark: true
+      })
+    }
+  }
+
   componentDidMount() {
     this.GETLOCATION()
+    if (localStorage.getItem("theme") === 'dark') {
+      document.querySelector('html').classList.add('dark')
+    } else {
+      document.querySelector('html').classList.remove('dark')
+    }
   }
 
   render() {
@@ -61,7 +83,7 @@ class LeftBar extends React.Component {
       return <Redirect to={{ pathname: "/login" }} />
     }
     return (
-      <aside className="px-3 py-1 sm:w-4/12 w-full">
+      <aside className="px-3 py-1 sm:w-4/12 w-full dark:text-white">
         <div className="sticky top-4 border-t border-b">
           <div className="text-center mt-3">
           <GoogleLogout
@@ -88,6 +110,17 @@ class LeftBar extends React.Component {
             : ''} 
     <button onClick={() => this.props.clear()} className="sm:ml-0 ml-3 mt-3 btn-yellow">{this.props.isupdate ? "Cancel" : "Clear"}</button>
             <button onClick={() => this.props.submitTodo()} className="ml-3 mt-3 btn-blue">{this.props.isupdate ? "Save" : "Submit"}</button>
+          </div>
+          <div className="text-center mb-3">
+            <button onClick={this.changeTheme} className={`px-3 py-2 rounded-full border bg-gray-900 text-gray-100 hover:bg-gray-100 hover:text-gray-900 hover:border-gray-900 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-900 dark:hover:text-gray-100 dark:hover:border-gray-100`}>
+              {
+                this.state.dark
+                ?
+                <i className="fas fa-sun"></i>
+                :
+                <i className="fas fa-moon"></i>
+              }
+            </button>
           </div>
         </div>
       </aside>

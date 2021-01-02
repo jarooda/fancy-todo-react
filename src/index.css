@@ -17,6 +17,9 @@
                   0 10px 10px rgba(0,0,0,.2),
                   0 20px 20px rgba(0,0,0,.15);
   }
+  .text-stroke {
+    -webkit-text-stroke: 1px rgba(17, 24, 39, var(--tw-bg-opacity));
+  }
 }
 
 @layer components {
@@ -36,6 +39,6 @@
     @apply text-gray-700 hover:text-black cursor-pointer
   }
   .input {
-    @apply border-2 shadow-md p-2 focus:outline-none hover:border-blue-300 focus:ring focus:ring-blue-300 focus:ring-opacity-50 rounded-md sm:text-base text-sm
+    @apply border-2 shadow-md p-2 focus:outline-none hover:border-blue-300 focus:ring focus:ring-blue-300 focus:ring-opacity-50 rounded-md sm:text-base text-sm text-black
   }
 }

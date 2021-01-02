@@ -38,8 +38,8 @@ class Todos extends React.Component {
 
   render() {
     return (
-      <div className="sm:w-8/12 justify-center w-full flex flex-wrap border-2 rounded-xl p-3 shadow-lg">
-        <div className="w-full flex justify-center flex-wrap h-20">
+      <div className="sm:w-8/12 justify-center w-full flex flex-wrap border-2 rounded-xl p-3 shadow-lg dark:text-white">
+        <div className="w-full flex justify-center flex-wrap h-20 pt-3">
           <input type="text" name="search" id="search" onChange={this.searching} className="input lg:w-8/12 w-full h-10" placeholder="Search Todo"/>
           {
             this.state.todos
