@@ -122,9 +122,7 @@ const GETWEATHER = (payload) => {
       method: 'get',
       url: '/weathers',
       headers: {
-        access_token: payload.access_token
-      },
-      data: {
+        access_token: payload.access_token,
         latitude: payload.latitude,
         longitude: payload.longitude
       }
