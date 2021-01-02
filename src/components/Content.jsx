@@ -27,6 +27,7 @@ class Content extends React.Component {
   }
 
   CLEAR = () => {
+    document.querySelector("#search").value = ''
     document.querySelector("#title").value = ''
     document.querySelector("#description").value = ''
     if (this.state.form.status) {
@@ -67,6 +68,9 @@ class Content extends React.Component {
         description,
         due_date
       }).then((res) => {
+        toast.success(
+          <p className="font-semibold text-white text-center"><i className="fas fa-check-circle mr-2"></i>Success Add Todo</p>
+        );
         this.CLEAR()
         this.fetchdata(access_token)
       }).catch(err => {
@@ -83,6 +87,9 @@ class Content extends React.Component {
         description,
         due_date
       }).then((res) => {
+        toast.success(
+          <p className="font-semibold text-white text-center"><i className="fas fa-check-circle mr-2"></i>Success Edit Todo</p>
+        );
         this.CLEAR()
         this.fetchdata(access_token)
       }).catch(err => {
@@ -126,6 +133,15 @@ class Content extends React.Component {
       id,
       status: newStatus
     }).then((res) => {
+      toast.success(
+        <p className="font-semibold text-white text-center"><i className="fas fa-check-circle mr-2"></i>Success Edit Todo Status</p>
+      );
+      this.setState({
+        isupdate: true
+      })
+      this.setState({
+        isupdate: false
+      })
       this.CLEAR()
       this.fetchdata(access_token)
     }).catch(err => {
@@ -141,6 +157,10 @@ class Content extends React.Component {
       id,
       access_token
     }).then(res => {
+      toast.success(
+        <p className="font-semibold text-white text-center"><i className="fas fa-check-circle mr-2"></i>Success Delete Todo</p>
+      );
+      this.CLEAR()
       this.fetchdata(access_token)
     }).catch(err => {
       toast.error(
@@ -168,7 +188,7 @@ class Content extends React.Component {
     return (
       <div className="flex sm:flex-nowrap flex-wrap container mx-auto m-3 sm:p-0 p-3 sm:pt-5 sm:min-h-55 min-h-65 pb-3">
         <LeftBar clear={this.CLEAR} formChange={this.formChange} submitTodo={this.submitTodo} form={this.state.form} isupdate={this.state.isupdate}/>
-        <Todos todos={this.state.todos} removetodo={this.removetodo} editTodo={this.editTodo} patchTodo={this.patchTodo}/>
+        <Todos todos={this.state.todos} removetodo={this.removetodo} editTodo={this.editTodo} patchTodo={this.patchTodo} isupdate={this.state.isupdate}/>
       </div>
     )
   }

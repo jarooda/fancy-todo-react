@@ -41,6 +41,9 @@ class Login extends React.Component {
       url: '/login',
       data: this.state.login
     }).then(({ data }) => {
+      toast.success(
+        <p className="font-semibold text-white text-center"><i className="fas fa-check-circle mr-2"></i>Login Success</p>
+      );
       localStorage.setItem('access_token', data.access_token)
       localStorage.setItem('name', data.name)
       document.querySelector('#login-email').value = ''
@@ -67,6 +70,9 @@ class Login extends React.Component {
         google_token
       }
     }).then(({ data }) => {
+      toast.success(
+        <p className="font-semibold text-white text-center"><i className="fas fa-check-circle mr-2"></i>Login Success</p>
+      );
       localStorage.setItem('access_token', data.access_token)
       localStorage.setItem('name', data.name)
       document.querySelector('#login-email').value = ''

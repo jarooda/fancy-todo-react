@@ -4,6 +4,7 @@ import {
 } from "react-router-dom"
 import API from '../api/index'
 import { GoogleLogout } from 'react-google-login';
+import { toast } from 'react-toastify';
 
 class LeftBar extends React.Component {
   constructor(props) {
@@ -19,6 +20,9 @@ class LeftBar extends React.Component {
   }
 
   LOGOUT = () => {
+    toast.success(
+      <p className="font-semibold text-white text-center"><i className="fas fa-check-circle mr-2"></i>Success Logout</p>
+    );
     localStorage.removeItem("access_token")
     localStorage.removeItem("name")
     this.setState({
@@ -67,7 +71,7 @@ class LeftBar extends React.Component {
             onLogoutSuccess={this.LOGOUT}
           />
           </div>
-    <p className="py-3">Hey <span className="font-semibold">{localStorage.getItem("name")}</span>, it looks like {this.state.weather.location}'s weather is on {this.state.weather.weather} with temperature {this.state.weather.temp}°C.<br/>Want to Add a New Todo? Remember you can double click todo to update its status.</p>
+          <p className="py-3">Hey <span className="font-semibold">{localStorage.getItem("name")}</span>, it looks like {this.state.weather.location}'s weather is on {this.state.weather.weather} with temperature {this.state.weather.temp}°C.<br/>Want to Add a New Todo? Remember you can double click todo to update its status.</p>
           <div className="flex-wrap flex justify-center border-t p-3 w-full">
             <h1 className="text-center font-semibold">{this.props.isupdate ? "Edit Todo" : "Add New Todo"}</h1>
             <input onChange={this.props.formChange} type="text" name="title" id="title" placeholder="Add New Title"

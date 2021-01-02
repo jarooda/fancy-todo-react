@@ -31,6 +31,9 @@ class Register extends React.Component {
       url: '/register',
       data: this.state.register
     }).then(({ data }) => {
+      toast.success(
+      <p className="font-semibold text-white text-center"><i className="fas fa-exclamation-triangle mr-2"></i>Success Registering Email {data.email}</p>
+      );
       document.querySelector('#register-email').value = ''
       document.querySelector('#register-password').value = ''
       this.setState({
@@ -56,6 +59,9 @@ class Register extends React.Component {
         google_token
       }
     }).then(({ data }) => {
+      toast.success(
+        <p className="font-semibold text-white text-center"><i className="fas fa-check-circle mr-2"></i>Login Success</p>
+      );
       localStorage.setItem('access_token', data.access_token)
       localStorage.setItem('name', data.name)
       document.querySelector('#register-email').value = ''
